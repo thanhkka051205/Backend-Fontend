@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device=width, initial=1.0" />
+    <title>Bài 8</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <table>
+      <td colspan="3">hàng 1 cột 1</td>
+      <!-- colspan là xóa hàng theo hàng ngang -->
+      <td rowspan="3">hàng 1 cột 1</td>
+      <!-- colspan là xóa hàng theo hàng dọc -->
+    </table>
+    <ul>
+      <!-- Dang sach không sắp xếp -->
+      <li>Mục 1</li>
+    </ul>
+
+    <ol type="1">
+      <!-- Danh sach sắp xếp, type = "1,A,i.I" tương ứng stt viết hoa và số la mã -->
+      <li>Mục 1</li>
+    </ol>
+
+    <form action="Link url" method="post" target="_blank">
+      <div class="box-1">
+        <label for="fullname">Họ tên: </label>
+        <!-- for=id -->
+        <input type="text" id="fullname" name="full_name" />
+        <select name="color" id="colors">
+          <option value="yellow">Vàng</option>
+          <option value="blank" selected>Đen</option></select
+        ><br />
+        <label for="note"><i class="fa-solid fa-trophy"></i>Ghi chú</label
+        ><br />
+        <textarea id="note"></textarea><br />
+        <input type="submit" value="Gửi" />
+      </div>
+    </form>
+    <div>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti eius
+        sequi aspernatur optio eligendi provident rem alias porro nostrum sed
+        ducimus eveniet odit modi error earum, ea ullam sapiente vero?
+      </p>
+      <p>con</p>
+      <p>cha</p>
+      <p>meo</p>
+    </div>
+    <h1>Dòng 1</h1>
+    <h1>Dòng 1.1</h1>
+    <h1>Dòng 1.2</h1>
+    <h2>Dòng 2</h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos nostrum vitae
+      repudiandae culpa aliquam illo saepe vero inventore, optio voluptas qui
+      facilis ipsa perferendis molestias sit vel rem, commodi alias?
+    </p>
+    <h2>Dòng 2</h2>
+    <h2>Dòng 2</h2>
+    <h3>Dòng 3</h3>
+
+    <div class="box box-1">1</div>
+    <div class="box box-2">2</div>
+    <div class="box">3</div>
+  </body>
+</html>

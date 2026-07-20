@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cau 01</title>
+  </head>
+  <body>
+    <form action="">
+      <input
+        type="text"
+        id="add-note"
+        name="notes"
+        placeholder="Thêm ghi chú"
+        required
+      />
+      <button id="add-button">Thêm</button>
+      <ul id="notes-List">
+        <li>List 1</li>
+        <button>Xóa</button>
+        <li>List 2</li>
+        <button>Xóa</button>
+        <li>List 2</li>
+        <button>Xóa</button>
+      </ul>
+    </form>
+
+    <script>
+      const addInput = document.getElementById("add-note");
+      addButton = document.getElementById("add-button");
+      addList = document.getElementById("notes-List");
+
+      addButton.addEvenListener("click", function () {
+        const note_text = addInput.value;
+        if (note_text !== "") {
+          const todoItem = document.createElementNS("li");
+          todoItem.textContent = note_text;
+          notes - List.appendChild(todoItem);
+          addInput.value = "";
+
+          todoItem.addEventListener("click", function () {
+            todoItem.classList.toggle("complete");
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

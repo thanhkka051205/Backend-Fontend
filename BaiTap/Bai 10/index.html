@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul>
+      <li><a href="#">Muc 1</a></li>
+      <li><a href="#">Muc 2</a></li>
+      <li><a href="#">Muc 3</a></li>
+    </ul>
+    <input type="text" id="input" />
+    <script>
+      /*         window.onload() =()=>{
+            console.log("OK")
+        } */
+      const input = document.querySelectorAll("#input");
+      input.onblur = () => {
+        input.value = input.value.toUpperCase();
+      };
+    </script>
+  </body>
+</html>
