@@ -1,4 +1,21 @@
 extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
 
 block main
-  h1 Welcome to the Products Page
+  .container.my-3
+    .row
+      .col-12
+        +box-head("Danh Sách Sản Phẩm")
+          h2.inner-title Danh Sách Sản Phẩm
+
+    .row
+      .col-4.mb-3
+        .product-item
+          .inner-image
+            img(src='https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp', alt='Essence Mascara Lash Princess')
+
+          .inner-content
+            h3.inner-title Essence Mascara Lash Princess
+            .inner-description This is a description of Product 1.
+            .inner-price $19.99
+            .inner-discount 10% off
