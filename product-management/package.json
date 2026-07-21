@@ -19,5 +19,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
+  },
+  "path-intellisense.mappings": {
+    "@": "${workspaceRoot}/src"
   }
 }
