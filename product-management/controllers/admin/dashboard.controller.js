@@ -1,6 +1,5 @@
-// File: controllers/admin/dashboard.controller.js
 module.exports.dashboard = (req, res) => {
   res.render("admin/pages/dashboard/index", {
-    pageTitle: "Trang Tong Quan"
+    pageTitle: "Trang Tong Quan",
   });
 };

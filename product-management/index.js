@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 
-const routerAdmin = require("./router/admin/index.route");
+const routeAdmin = require("./router/admin/index.route");
 const router = require("./router/client/index.route");
 
 const systemConfig = require("./config/system");
@@ -18,11 +18,9 @@ app.set("view engine", "pug");
 // App Locals VVariables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
-console.log("👉 GIÁ TRỊ CỦA PREFIX ADMIN LÀ:", app.locals.prefixAdmin);
-
 app.use(express.static("public"));
+routeAdmin(app);
 router(app);
-routerAdmin(app);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
