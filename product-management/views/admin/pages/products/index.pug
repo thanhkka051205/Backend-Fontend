@@ -13,36 +13,25 @@ block main
         th Trạng thái
         th Hành động
     tbody
-      tr
-        td 1
-        td
-          img(
-            src="https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp", 
-            alt="Essence Mascara Lash Princess", 
-            width="50px", 
-            height="auto"
-          )
-        td Essence Mascara Lash Princess
-        td $9.99
-        td
-          span.badge.badge-success Hoạt động
-        td
-          a.btn.btn-sm.btn-warning(href="/admin/products/edit/1") Sửa
-          a.btn.btn-sm.btn-danger(href="/admin/products/delete/1") Xóa
-
-      tr
-        td 2
-        td
-          img(
-            src="https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp", 
-            alt="Eyeshadow Palette with Mirror", 
-            width="50px", 
-            height="auto"
-          )
-        td Eyeshadow Palette with Mirror
-        td $19.99
-        td
-          span.badge.badge-danger Ngừng hoạt động
-        td
-          a.btn.btn-sm.btn-warning(href="/admin/products/edit/2") Sửa
-          a.btn.btn-sm.btn-danger(href="/admin/products/delete/2") Xóa
+      each item, index in products
+        tr
+          td #{index + 1}
+          td
+            img(
+              src= item.thumbnail, 
+              alt= item.title, 
+              width="50px", 
+              height="auto"
+            )
+          td #{item.title}
+          td #{item.price}$
+          td
+            if(item.status === "active")
+              span.badge.bg-success Hoạt động
+            else if(item.status === "inactive")
+              span.badge.bg-secondary Không hoạt động
+            else
+              span.badge.bg-warning Hết hàng
+          td
+            button.btn.btn-sm.btn-warning(href="/admin/products/edit/1") Sửa
+            button.btn.btn-sm.btn-danger(href="/admin/products/delete/1") Xóa
