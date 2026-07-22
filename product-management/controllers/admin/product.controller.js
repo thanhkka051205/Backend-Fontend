@@ -38,6 +38,15 @@ module.exports.index = async (req, res) => {
     find.status = req.query.status;
   }
 
+  let keyword = "";
+
+  if (req.query.keyword) {
+    keyword = req.query.keyword;
+
+    const regex = new RegExp(keyword, "i");
+    find.title = regex;
+  }
+
   const products = await Product.find(find);
 
   // 4. Render dữ liệu ra file Pug
@@ -45,5 +54,6 @@ module.exports.index = async (req, res) => {
     pageTitle: "Quản Lý Sản Phẩm",
     products: products,
     filterStatus: filterStatus,
+    keyword: keyword,
   });
 };
