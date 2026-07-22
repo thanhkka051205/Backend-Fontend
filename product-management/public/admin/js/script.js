@@ -38,3 +38,21 @@ if (formSearch) {
   });
 }
 // End Form Search
+
+// Pagination
+const buttonPagination = document.querySelectorAll("[button-pagination]");
+
+if (buttonPagination.length > 0) {
+  buttonPagination.forEach((button) => {
+    button.addEventListener("click", () => {
+      let url = new URL(window.location.href);
+
+      const page = button.getAttribute("button-pagination");
+
+      url.searchParams.set("page", page);
+
+      window.location.href = url.href;
+    });
+  });
+}
+// End pagination
