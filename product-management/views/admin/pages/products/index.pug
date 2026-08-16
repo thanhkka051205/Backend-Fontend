@@ -19,6 +19,29 @@ block main
   .card.mb-3
     .card-header Danh Sách
     .card-body
+      form(
+        action=`${prefixAdmin}/products` 
+        method="GET" 
+        form-change-multi
+      )
+        .d-flex-align-items-start
+          .form-group
+            select(
+              name="type"
+              class="form-control"
+            )
+              option(value="") -- Chọn danh mục --
+              option(value="active") Hoạt động
+              option(value="inactive") Dừng hoạt động
+          .form-group
+            input(
+              type="text"
+              name="ids"
+              value=""
+              class="form-control"
+            )
+          button(type="submit" class="btn btn-primary") Áp dụng
+
       table.table.table-hover.table-sm
         thead
           tr
