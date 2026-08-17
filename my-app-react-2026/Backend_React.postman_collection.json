@@ -1,0 +1,175 @@
+{
+  "id": "nest-nestjs-v1-ultimate-collection",
+  "name": "Backend React Ultimate (Nestjs)",
+  "description": "Collection mẫu chuẩn cấu trúc API NestJS với tiền tố /api/v1",
+  "order": [],
+  "folders": [
+    {
+      "id": "folder-user",
+      "name": "module user",
+      "description": "Quản lý thành viên",
+      "order": [
+        "req-user-create",
+        "req-user-getall",
+        "req-user-paginate",
+        "req-user-update",
+        "req-user-delete"
+      ]
+    },
+    {
+      "id": "folder-upload",
+      "name": "module upload file",
+      "description": "Quản lý tải tập tin",
+      "order": ["req-upload-single"]
+    },
+    {
+      "id": "folder-auth",
+      "name": "module auth",
+      "description": "Xác thực người dùng",
+      "order": ["req-auth-login", "req-auth-register", "req-auth-account"]
+    },
+    {
+      "id": "folder-book",
+      "name": "module book (authenticated)",
+      "description": "Quản lý sách (Yêu cầu Token)",
+      "order": [
+        "req-book-paginate",
+        "req-book-create",
+        "req-book-update",
+        "req-book-delete"
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "id": "req-user-create",
+      "folderId": "folder-user",
+      "name": "create a user",
+      "method": "POST",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"name\": \"\",\n  \"email\": \"\",\n  \"password\": \"\"\n}",
+      "headers": "Content-Type: application/json\n",
+      "url": "http://localhost:3000/api/v1/users"
+    },
+    {
+      "id": "req-user-getall",
+      "folderId": "folder-user",
+      "name": "get all users",
+      "method": "GET",
+      "headers": "",
+      "url": "http://localhost:3000/api/v1/users"
+    },
+    {
+      "id": "req-user-paginate",
+      "folderId": "folder-user",
+      "name": "get user with paginate",
+      "method": "GET",
+      "headers": "",
+      "url": "http://localhost:3000/api/v1/users?current=1&pageSize=10"
+    },
+    {
+      "id": "req-user-update",
+      "folderId": "folder-user",
+      "name": "update a user",
+      "method": "PUT",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"name\": \"\"\n}",
+      "headers": "Content-Type: application/json\n",
+      "url": "http://localhost:3000/api/v1/users/id_cua_user"
+    },
+    {
+      "id": "req-user-delete",
+      "folderId": "folder-user",
+      "name": "delete a user",
+      "method": "DELETE",
+      "headers": "",
+      "url": "http://localhost:3000/api/v1/users/id_cua_user"
+    },
+    {
+      "id": "req-upload-single",
+      "folderId": "folder-upload",
+      "name": "Upload single file",
+      "method": "POST",
+      "data": [
+        {
+          "key": "file",
+          "type": "file",
+          "enabled": true
+        }
+      ],
+      "dataMode": "params",
+      "headers": "",
+      "url": "http://localhost:3000/api/v1/files/upload"
+    },
+    {
+      "id": "req-auth-login",
+      "folderId": "folder-auth",
+      "name": "login",
+      "method": "POST",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"username\": \"\",\n  \"password\": \"\"\n}",
+      "headers": "Content-Type: application/json\n",
+      "url": "http://localhost:3000/api/v1/auth/login"
+    },
+    {
+      "id": "req-auth-register",
+      "folderId": "folder-auth",
+      "name": "register",
+      "method": "POST",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"email\": \"\",\n  \"password\": \"\",\n  \"name\": \"\"\n}",
+      "headers": "Content-Type: application/json\n",
+      "url": "http://localhost:3000/api/v1/auth/register"
+    },
+    {
+      "id": "req-auth-account",
+      "folderId": "folder-auth",
+      "name": "get account",
+      "method": "GET",
+      "headers": "Authorization: Bearer thay_token_vao_day\n",
+      "url": "http://localhost:3000/api/v1/auth/account"
+    },
+    {
+      "id": "req-book-paginate",
+      "folderId": "folder-book",
+      "name": "get book with paginate",
+      "method": "GET",
+      "headers": "Authorization: Bearer thay_token_vao_day\n",
+      "url": "http://localhost:3000/api/v1/books?current=1&pageSize=10"
+    },
+    {
+      "id": "req-book-create",
+      "folderId": "folder-book",
+      "name": "create a book",
+      "method": "POST",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"title\": \"\",\n  \"author\": \"\"\n}",
+      "headers": "Content-Type: application/json\nAuthorization: Bearer thay_token_vao_day\n",
+      "url": "http://localhost:3000/api/v1/books"
+    },
+    {
+      "id": "req-book-update",
+      "folderId": "folder-book",
+      "name": "update a book",
+      "method": "PUT",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"title\": \"\"\n}",
+      "headers": "Content-Type: application/json\nAuthorization: Bearer thay_token_vao_day\n",
+      "url": "http://localhost:3000/api/v1/books/id_cua_sach"
+    },
+    {
+      "id": "req-book-delete",
+      "folderId": "folder-book",
+      "name": "delete a book",
+      "method": "DELETE",
+      "headers": "Authorization: Bearer thay_token_vao_day\n",
+      "url": "http://localhost:3000/api/v1/books/id_cua_sach"
+    }
+  ]
+}
