@@ -1,0 +1,13 @@
+import UserForm from "../components/layouts/user/user.form";
+import UserTable from "../components/layouts/user/user.table";
+
+const UserPage = () => {
+  return (
+    <div>
+      <UserForm />
+      <UserTable />
+    </div>
+  );
+};
+
+export default UserPage;
