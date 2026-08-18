@@ -1,0 +1,175 @@
+{
+  "id": "nest-nestjs-v1-phone-store-collection",
+  "name": "Backend Phone Store Ultimate (NodeJS)",
+  "description": "Collection chuẩn cấu trúc API quản lý cửa hàng bán điện thoại với tiền tố /api/v1 chạy cổng 8080",
+  "order": [],
+  "folders": [
+    {
+      "id": "folder-user",
+      "name": "module user",
+      "description": "Quản lý nhân viên và khách hàng",
+      "order": [
+        "req-user-create",
+        "req-user-getall",
+        "req-user-paginate",
+        "req-user-update",
+        "req-user-delete"
+      ]
+    },
+    {
+      "id": "folder-upload",
+      "name": "module upload file",
+      "description": "Quản lý tải hình ảnh điện thoại",
+      "order": ["req-upload-single"]
+    },
+    {
+      "id": "folder-auth",
+      "name": "module auth",
+      "description": "Xác thực người dùng hệ thống",
+      "order": ["req-auth-login", "req-auth-register", "req-auth-account"]
+    },
+    {
+      "id": "folder-phone",
+      "name": "module phone (authenticated)",
+      "description": "Quản lý kho điện thoại (Yêu cầu Token)",
+      "order": [
+        "req-phone-paginate",
+        "req-phone-create",
+        "req-phone-update",
+        "req-phone-delete"
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "id": "req-user-create",
+      "folderId": "folder-user",
+      "name": "create a user",
+      "method": "POST",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"fullName\": \"\",\n  \"email\": \"\",\n  \"password\": \"\",\n  \"phone\": \"\",\n  \"role\": \"user\"\n}",
+      "headers": "Content-Type: application/json\n",
+      "url": "http://localhost:8080/api/v1/users"
+    },
+    {
+      "id": "req-user-getall",
+      "folderId": "folder-user",
+      "name": "get all users",
+      "method": "GET",
+      "headers": "",
+      "url": "http://localhost:8080/api/v1/users"
+    },
+    {
+      "id": "req-user-paginate",
+      "folderId": "folder-user",
+      "name": "get user with paginate",
+      "method": "GET",
+      "headers": "",
+      "url": "http://localhost:8080/api/v1/users?current=1&pageSize=10"
+    },
+    {
+      "id": "req-user-update",
+      "folderId": "folder-user",
+      "name": "update a user",
+      "method": "PUT",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"fullName\": \"\",\n  \"phone\": \"\",\n  \"role\": \"\"\n}",
+      "headers": "Content-Type: application/json\n",
+      "url": "http://localhost:8080/api/v1/users/id_cua_user"
+    },
+    {
+      "id": "req-user-delete",
+      "folderId": "folder-user",
+      "name": "delete a user",
+      "method": "DELETE",
+      "headers": "",
+      "url": "http://localhost:8080/api/v1/users/id_cua_user"
+    },
+    {
+      "id": "req-upload-single",
+      "folderId": "folder-upload",
+      "name": "Upload single file",
+      "method": "POST",
+      "data": [
+        {
+          "key": "file",
+          "type": "file",
+          "enabled": true
+        }
+      ],
+      "dataMode": "params",
+      "headers": "",
+      "url": "http://localhost:8080/api/v1/files/upload"
+    },
+    {
+      "id": "req-auth-login",
+      "folderId": "folder-auth",
+      "name": "login",
+      "method": "POST",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"username\": \"\",\n  \"password\": \"\"\n}",
+      "headers": "Content-Type: application/json\n",
+      "url": "http://localhost:8080/api/v1/auth/login"
+    },
+    {
+      "id": "req-auth-register",
+      "folderId": "folder-auth",
+      "name": "register",
+      "method": "POST",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"fullName\": \"\",\n  \"email\": \"\",\n  \"password\": \"\",\n  \"phone\": \"\"\n}",
+      "headers": "Content-Type: application/json\n",
+      "url": "http://localhost:8080/api/v1/auth/register"
+    },
+    {
+      "id": "req-auth-account",
+      "folderId": "folder-auth",
+      "name": "get account",
+      "method": "GET",
+      "headers": "Authorization: Bearer thay_token_vao_day\n",
+      "url": "http://localhost:8080/api/v1/auth/account"
+    },
+    {
+      "id": "req-phone-paginate",
+      "folderId": "folder-phone",
+      "name": "get phones with paginate",
+      "method": "GET",
+      "headers": "Authorization: Bearer thay_token_vao_day\n",
+      "url": "http://localhost:8080/api/v1/phones?current=1&pageSize=10"
+    },
+    {
+      "id": "req-phone-create",
+      "folderId": "folder-phone",
+      "name": "create a phone",
+      "method": "POST",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"phoneName\": \"iPhone 15 Pro Max\",\n  \"brand\": \"Apple\",\n  \"price\": 29990000,\n  \"stock\": 50,\n  \"image\": \"url_anh_dien_thoai\"\n}",
+      "headers": "Content-Type: application/json\nAuthorization: Bearer thay_token_vao_day\n",
+      "url": "http://localhost:8080/api/v1/phones"
+    },
+    {
+      "id": "req-phone-update",
+      "folderId": "folder-phone",
+      "name": "update a phone",
+      "method": "PUT",
+      "data": [],
+      "dataMode": "raw",
+      "rawModeData": "{\n  \"phoneName\": \"\",\n  \"price\": 0,\n  \"stock\": 0\n}",
+      "headers": "Content-Type: application/json\nAuthorization: Bearer thay_token_vao_day\n",
+      "url": "http://localhost:8080/api/v1/phones/id_cua_dien_thoai"
+    },
+    {
+      "id": "req-phone-delete",
+      "folderId": "folder-phone",
+      "name": "delete a phone",
+      "method": "DELETE",
+      "headers": "Authorization: Bearer thay_token_vao_day\n",
+      "url": "http://localhost:8080/api/v1/phones/id_cua_dien_thoai"
+    }
+  ]
+}
