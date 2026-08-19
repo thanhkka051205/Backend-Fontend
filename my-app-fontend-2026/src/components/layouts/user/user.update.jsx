@@ -1,34 +1,45 @@
-import { Input } from "antd";
-import { useState } from "react";
+import { Input, Modal } from "antd";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { createUserAPI } from "../../../services/api.service";
-import { Modal } from "antd";
+import { updateUserAPI } from "../../../services/api.service";
 
-const UserForm = (props) => {
-  const { loadUser } = props;
+const UpdateUser = (props) => {
+  const {
+    loadUser,
+    isModalUpdateUser,
+    setModalUpdateUser,
+    dataUpdate,
+    setDataUpdate,
+  } = props;
 
+  const [idUsers, setIdUsers] = useState("");
   const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (dataUpdate) {
+      setIdUsers(dataUpdate.idUsers);
+      setFullName(dataUpdate.fullName);
+      setPhone(dataUpdate.phone);
+    }
+  }, [dataUpdate]);
 
   const handleSubmitBtn = async () => {
-    if (!fullName || !email || !password || !phone) {
+    if (!fullName || !phone) {
       toast.error("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
 
     try {
-      const res = await createUserAPI({ fullName, email, password, phone });
+      const res = await updateUserAPI({ idUsers, fullName, phone });
 
       if (res && res.data) {
-        toast.success("Tạo user thành công");
+        toast.success("Update thành công");
+        setIdUsers("");
         setFullName("");
-        setEmail("");
-        setPassword("");
         setPhone("");
-        setIsModalOpen(false);
+        setDataUpdate(null);
+        setModalUpdateUser(false);
         await loadUser();
       }
     } catch (error) {
@@ -75,7 +86,7 @@ const UserForm = (props) => {
             Table User
           </h3>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setModalUpdateUser(true)}
             style={{
               backgroundColor: "#1677ff",
               color: "#ffffff",
@@ -95,21 +106,24 @@ const UserForm = (props) => {
               (e.currentTarget.style.backgroundColor = "#1677ff")
             }
           >
-            Create User
+            Update User
           </button>
         </div>
 
         <Modal
           title={
             <span style={{ fontSize: "16px", fontWeight: 600 }}>
-              Tạo mới user
+              Update User
             </span>
           }
-          open={isModalOpen}
+          open={isModalUpdateUser}
           onOk={handleSubmitBtn}
-          onCancel={() => setIsModalOpen(false)}
+          onCancel={() => {
+            setModalUpdateUser(false);
+            setDataUpdate(null);
+          }}
           mask={{ closable: false }}
-          okText="Create"
+          okText="Save"
         >
           <div
             style={{
@@ -120,26 +134,17 @@ const UserForm = (props) => {
             }}
           >
             <div style={formItemStyle}>
+              <span style={labelStyle}>Id</span>
+              <Input value={idUsers} disabled />
+            </div>
+            <div style={formItemStyle}>
               <span style={labelStyle}>Full Name</span>
               <Input
                 value={fullName}
                 onChange={(event) => setFullName(event.target.value)}
               />
             </div>
-            <div style={formItemStyle}>
-              <span style={labelStyle}>Email</span>
-              <Input
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </div>
-            <div style={formItemStyle}>
-              <span style={labelStyle}>Password</span>
-              <Input.Password
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </div>
+
             <div style={formItemStyle}>
               <span style={labelStyle}>Phone Number</span>
               <Input
@@ -155,4 +160,4 @@ const UserForm = (props) => {
   );
 };
 
-export default UserForm;
+export default UpdateUser;

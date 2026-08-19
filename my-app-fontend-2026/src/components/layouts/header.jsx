@@ -1,48 +1,51 @@
-import React from "react";
-import "./header.scss";
+import { React, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import logo from "../../assets/react.svg";
+import {
+  HomeTwoTone,
+  UsergroupAddOutlined,
+  ProductOutlined,
+} from "@ant-design/icons";
+import { Menu } from "antd";
 
 const Header = (props) => {
-  const cartItemCount = 0;
+  const [current, setCurrent] = useState("");
+
+  const onClick = (e) => {
+    console.log("click ", e);
+    setCurrent(e.key);
+  };
+
+  const items = [
+    {
+      label: <NavLink to="/">Home</NavLink>,
+      key: "home",
+      icon: <HomeTwoTone />,
+    },
+    {
+      label: <NavLink to="/products">Products</NavLink>,
+      key: "products",
+      icon: <ProductOutlined />,
+    },
+    {
+      label: <NavLink to="/user">User</NavLink>,
+      key: "user",
+      icon: <UsergroupAddOutlined />,
+    },
+  ];
+
+  const [collapsed, setCollapsed] = useState(false);
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
 
   return (
-    <header className="app-header">
-      {/* Khối Logo */}
-      <div className="header-logo">
-        <NavLink to="/">
-          <img src={logo} alt="Logo" className="logo-img" />
-        </NavLink>
-      </div>
-
-      {/* Khối Menu Điều Hướng */}
-      <nav className="header-nav">
-        <ul>
-          <li>
-            <NavLink to="/">Trang chủ</NavLink>
-          </li>
-          <li>
-            <NavLink to="/products">Sản phẩm</NavLink>
-          </li>
-          <li>
-            <NavLink to="/user">User</NavLink>
-          </li>
-          <li>
-            <NavLink to="/contacts">Liên hệ</NavLink>
-          </li>
-        </ul>
-      </nav>
-
-      {/* Khối Hành Động (Giỏ hàng & Đăng nhập) */}
-      <div className="header-actions">
-        <div className="cart-status">
-          <span>Giỏ hàng ({cartItemCount})</span>
-        </div>
-        <NavLink to="/login" className="btn-login">
-          Đăng nhập
-        </NavLink>
-      </div>
-    </header>
+    <Menu
+      onClick={onClick}
+      selectedKeys={[current]}
+      mode="horizontal"
+      items={items}
+    />
   );
 };
 

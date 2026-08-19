@@ -4,6 +4,7 @@ const sequelize = require("./config/connection.db.js");
 const {
   createUserController,
   getUsersController,
+  updateUserController,
 } = require("./controllers/user.controller.js");
 const User = require("./models/user.model.js");
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 // API Routes
 app.post("/api/v1/users", createUserController);
 app.get("/api/v1/users", getUsersController);
+app.put("/api/v1/users", updateUserController);
 
 // KẾT NỐI VÀ ĐỒNG BỘ MYSQL
 sequelize

@@ -6,7 +6,11 @@ const createUserAPI = async (data) => {
   return await axios.post(URL_BACKEND, data);
 };
 
-const updateUserAPI = () => {};
+const updateUserAPI = async (data) => {
+  const URL_BACKEND = `/api/v1/users`;
+
+  return await axios.put(URL_BACKEND, data);
+};
 
 const deleteUserAPI = () => {};
 
