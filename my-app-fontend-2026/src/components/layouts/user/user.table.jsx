@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Flex, Space, Table, Tag } from "antd";
-import { getAllUserAPI } from "../../../services/api.service";
 
-const UserTable = () => {
-  const [dataUsers, setDataUser] = useState([]);
-
+const UserTable = (props) => {
+  const { dataUsers } = props;
+  
   const handleEditUser = () => {};
 
   const handleDeleteUser = () => {};
-
-  useEffect(() => {
-    loadUser();
-  }, []);
 
   const columns = [
     {
@@ -43,11 +38,6 @@ const UserTable = () => {
       },
     },
   ];
-
-  const loadUser = async () => {
-    const res = await getAllUserAPI();
-    setDataUser(res.data.data);
-  };
 
   return <Table columns={columns} dataSource={dataUsers} rowKey="idUsers" />;
 };
