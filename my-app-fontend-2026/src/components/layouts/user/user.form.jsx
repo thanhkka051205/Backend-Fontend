@@ -108,7 +108,7 @@ const UserForm = (props) => {
           open={isModalOpen}
           onOk={handleSubmitBtn}
           onCancel={() => setIsModalOpen(false)}
-          mask={{ closable: false }}
+          mask={{ closable: false }}x
           okText="Create"
         >
           <div

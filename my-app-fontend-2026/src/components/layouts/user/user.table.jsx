@@ -1,21 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { Flex, Space, Table, Tag } from "antd";
+import React, { useState } from "react";
+import { Space, Table } from "antd";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import UpdateUser from "./user.update";
+import ViewUSer from "./user.detail"; // Hoặc đổi tên thành ViewUser nếu đã sửa file bên kia
 
 const UserTable = (props) => {
   const { dataUsers, loadUser } = props;
+
+  //Update
   const [isModalUpdateUser, setModalUpdateUser] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
 
-  const handleDeleteUser = () => {};
+  //View
+  const [isModalViewUser, setModalViewUser] = useState(false);
+  const [viewData, setViewData] = useState(null);
 
   const columns = [
     {
       title: "ID",
       dataIndex: "idUsers",
-      render: (_, record) => {
-        return <a href="#">{record.idUsers}</a>;
+      render: (text, record) => {
+        return (
+          <a
+            href="#/"
+            onClick={(e) => {
+              e.preventDefault();
+              setModalViewUser(true);
+              setViewData(record);
+            }}
+          >
+            {text}
+          </a>
+        );
       },
     },
     {
@@ -32,12 +48,13 @@ const UserTable = (props) => {
         return (
           <Space size="large">
             <EditTwoTone
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 setDataUpdate(record);
                 setModalUpdateUser(true);
               }}
             />
-            <DeleteTwoTone />
+            <DeleteTwoTone style={{ cursor: "pointer" }} />
           </Space>
         );
       },
@@ -46,13 +63,21 @@ const UserTable = (props) => {
 
   return (
     <>
-      <Table columns={columns} dataSource={dataUsers} rowKey="idUsers" />;
+      <Table columns={columns} dataSource={dataUsers} rowKey="idUsers" />
+
       <UpdateUser
         isModalUpdateUser={isModalUpdateUser}
         setModalUpdateUser={setModalUpdateUser}
         dataUpdate={dataUpdate}
         setDataUpdate={setDataUpdate}
         loadUser={loadUser}
+      />
+
+      <ViewUSer
+        isModalViewUser={isModalViewUser}
+        setModalViewUser={setModalViewUser}
+        viewData={viewData}
+        setViewData={setViewData}
       />
     </>
   );

@@ -66,50 +66,6 @@ const UpdateUser = (props) => {
       style={{ padding: "20px", backgroundColor: "#fff", borderRadius: "8px" }}
     >
       <div style={{ display: "flex", gap: "15px", flexDirection: "column" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            borderBottom: "1px solid #f0f0f0",
-            paddingBottom: "16px",
-          }}
-        >
-          <h3
-            style={{
-              margin: 0,
-              fontSize: "18px",
-              fontWeight: 600,
-              color: "#1f1f1f",
-            }}
-          >
-            Table User
-          </h3>
-          <button
-            onClick={() => setModalUpdateUser(true)}
-            style={{
-              backgroundColor: "#1677ff",
-              color: "#ffffff",
-              border: "none",
-              padding: "8px 16px",
-              borderRadius: "6px",
-              fontWeight: 500,
-              fontSize: "14px",
-              cursor: "pointer",
-              boxShadow: "0 2px 0 rgba(5, 145, 255, 0.1)",
-              transition: "all 0.2s ease",
-            }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.backgroundColor = "#4096ff")
-            }
-            onMouseOut={(e) =>
-              (e.currentTarget.style.backgroundColor = "#1677ff")
-            }
-          >
-            Update User
-          </button>
-        </div>
-
         <Modal
           title={
             <span style={{ fontSize: "16px", fontWeight: 600 }}>
