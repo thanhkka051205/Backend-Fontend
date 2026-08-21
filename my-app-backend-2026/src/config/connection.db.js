@@ -1,10 +1,21 @@
-const { Sequelize } = require("sequelize");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-// Cấu hình tài khoản MySQL của bạn tại đây
-const sequelize = new Sequelize("my_app_react_2026", "root", "", {
-  host: "localhost",
-  dialect: "mysql",
-  logging: false, // Tắt dòng log câu lệnh SQL chạy ngầm ở terminal cho sạch
-});
+const connectDB = async () => {
+  try {
+    const url = process.env.MONGO_URL;
 
-module.exports = sequelize;
+    if (!url) {
+      console.error("❌ Lỗi: Biến MONGO_URL trong file .env đang trống!");
+      return;
+    }
+
+    await mongoose.connect(url);
+    console.log("Kết nối Database MongoDB thành công! 🍃");
+  } catch (error) {
+    console.error("Lỗi kết nối DB MongoDB thất bại:", error.message);
+    throw error;
+  }
+};
+
+module.exports = connectDB;

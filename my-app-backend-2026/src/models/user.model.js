@@ -1,30 +1,36 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/connection.db");
+const mongoose = require("mongoose");
+const crypto = require("crypto");
 
-const User = sequelize.define(
-  "User",
+const userSchema = new mongoose.Schema(
   {
     idUsers: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      field: "idUsers",
+      type: String,
+      default: () => crypto.randomUUID(),
+      unique: true,
     },
-    fullName: { type: DataTypes.STRING, allowNull: false },
-    email: { type: DataTypes.STRING, allowNull: false, unique: true },
-    password: { type: DataTypes.STRING, allowNull: false },
-    phone: { type: DataTypes.STRING, allowNull: false },
-    // Cấu hình trường role đồng bộ với ENUM của MySQL
-    role: {
-      type: DataTypes.ENUM("user", "admin", "manager"),
-      allowNull: false,
-      defaultValue: "user",
+    fullName: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
     },
   },
   {
-    tableName: "users",
-    timestamps: true, // Bật lên true vì SQL trên đã có createdAt và updatedAt
+    timestamps: true,
   },
 );
+
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

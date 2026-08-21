@@ -1,19 +1,37 @@
 import React, { useState } from "react";
-import { Space, Table } from "antd";
+import { Space, Table, Popconfirm } from "antd";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import UpdateUser from "./user.update";
-import ViewUSer from "./user.detail"; // Hoặc đổi tên thành ViewUser nếu đã sửa file bên kia
+import ViewUSer from "./user.detail";
+import { deleteUserAPI } from "../../../services/api.service";
+import { toast } from "react-toastify";
 
 const UserTable = (props) => {
   const { dataUsers, loadUser } = props;
 
-  //Update
+  // Update
   const [isModalUpdateUser, setModalUpdateUser] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
 
-  //View
+  // View
   const [isModalViewUser, setModalViewUser] = useState(false);
   const [viewData, setViewData] = useState(null);
+
+  // Delete
+  const handleDeleteUser = async (id) => {
+    try {
+      const res = await deleteUserAPI({ idUsers: id });
+
+      if (res && res.data) {
+        toast.success("Xóa thành công");
+        await loadUser(); // Tải lại danh sách
+      } else {
+        toast.error("Xóa không thành công từ máy chủ");
+      }
+    } catch (error) {
+      toast.error("Xoá không thành công");
+    }
+  };
 
   const columns = [
     {
@@ -54,7 +72,16 @@ const UserTable = (props) => {
                 setModalUpdateUser(true);
               }}
             />
-            <DeleteTwoTone style={{ cursor: "pointer" }} />
+            <Popconfirm
+              title="Xóa người dùng"
+              description="Bạn có chắc chắn muốn xóa người dùng này không?"
+              okText="Có"
+              cancelText="Không"
+              // SỬA: Bọc lại bằng Arrow function để tránh tự kích hoạt hàm khi render
+              onConfirm={() => handleDeleteUser(record.idUsers)}
+            >
+              <DeleteTwoTone style={{ cursor: "pointer" }} />
+            </Popconfirm>
           </Space>
         );
       },

@@ -1,13 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-const sequelize = require("./config/connection.db.js");
-const {
-  createUserController,
-  getUsersController,
-  updateUserController,
-} = require("./controllers/user.controller.js");
-const User = require("./models/user.model.js");
+const connectDB = require("./config/connection.db.js");
+const userRouter = require("./routes/user.route.js");
+const dns = require('node:dns');
 
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+dns.setDefaultResultOrder('ipv4first');
 const app = express();
 const PORT = 8080;
 
@@ -16,19 +14,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API Routes
-app.post("/api/v1/users", createUserController);
-app.get("/api/v1/users", getUsersController);
-app.put("/api/v1/users", updateUserController);
+app.use("/api/v1", userRouter);
 
-// KẾT NỐI VÀ ĐỒNG BỘ MYSQL
-sequelize
-  .sync({ alter: true })
-  .then(() => {
-    console.log("Kết nối Cơ sở dữ liệu MySQL thành công! 🐬");
-    app.listen(PORT, () => {
-      console.log(`Backend NodeJS đang chạy tại: http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("Lỗi kết nối MySQL thất bại: ", err.message);
-  });
+app.listen(PORT, async () => {
+  console.log(`🚀 Backend NodeJS đang chạy tại: http://localhost:${PORT}`);
+
+  await connectDB();
+});
