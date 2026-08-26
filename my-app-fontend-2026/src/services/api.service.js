@@ -9,12 +9,16 @@ const createUserAPI = async (data) => {
 // 2. API PUT: Cập nhật thông tin người dùng
 const updateUserAPI = async (data) => {
   const URL_BACKEND = `/api/v1/users`;
-  return await axios.put(URL_BACKEND, data);
+  return await axios.put(URL_BACKEND, {
+    _id: data.id,
+    fullName: data.fullName,
+    phone: data.phone,
+  });
 };
 
 // 3. API DELETE: Xóa người dùng
-const deleteUserAPI = async (data) => {
-  const URL_BACKEND = `/api/v1/users/${data.idUsers}`;
+const deleteUserAPI = async (id) => {
+  const URL_BACKEND = `/api/v1/users/${id}`;
   return await axios.delete(URL_BACKEND);
 };
 
@@ -24,4 +28,33 @@ const getAllUserAPI = async () => {
   return await axios.get(URL_BACKEND);
 };
 
-export { createUserAPI, updateUserAPI, deleteUserAPI, getAllUserAPI };
+// 5. UPLOAD FILE: upload ảnh
+const handlerUploadFile = async (file, folder) => {
+  const URL_BACKEND = "/api/v1/file/upload";
+
+  const bodyFormData = new FormData();
+  bodyFormData.append("file", file);
+
+  return await axios.post(URL_BACKEND, bodyFormData);
+};
+
+// 6. API UPDATE AVATAR
+const updateUserAvatarAPI = (avatar, _id, fullName, phone) => {
+  const URL_API = "/api/v1/users";
+  const data = {
+    _id,
+    fullName,
+    phone,
+    avatar,
+  };
+  return axios.put(URL_API, data);
+};
+
+export {
+  createUserAPI,
+  updateUserAPI,
+  deleteUserAPI,
+  getAllUserAPI,
+  handlerUploadFile,
+  updateUserAvatarAPI,
+};

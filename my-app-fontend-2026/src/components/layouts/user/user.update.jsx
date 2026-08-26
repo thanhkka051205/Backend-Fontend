@@ -12,13 +12,13 @@ const UpdateUser = (props) => {
     setDataUpdate,
   } = props;
 
-  const [idUsers, setIdUsers] = useState("");
+  const [id, setId] = useState("");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
 
   useEffect(() => {
     if (dataUpdate) {
-      setIdUsers(dataUpdate.idUsers);
+      setId(dataUpdate._id);
       setFullName(dataUpdate.fullName);
       setPhone(dataUpdate.phone);
     }
@@ -31,11 +31,11 @@ const UpdateUser = (props) => {
     }
 
     try {
-      const res = await updateUserAPI({ idUsers, fullName, phone });
+      const res = await updateUserAPI({ id, fullName, phone });
 
       if (res && res.data) {
         toast.success("Update thành công");
-        setIdUsers("");
+        setId("");
         setFullName("");
         setPhone("");
         setDataUpdate(null);
@@ -91,7 +91,7 @@ const UpdateUser = (props) => {
           >
             <div style={formItemStyle}>
               <span style={labelStyle}>Id</span>
-              <Input value={idUsers} disabled />
+              <Input value={id} disabled />
             </div>
             <div style={formItemStyle}>
               <span style={labelStyle}>Full Name</span>

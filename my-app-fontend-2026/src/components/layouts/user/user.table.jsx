@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Space, Table, Popconfirm } from "antd";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import UpdateUser from "./user.update";
-import ViewUSer from "./user.detail";
+import ViewUSer from "./view.detail.user";
 import { deleteUserAPI } from "../../../services/api.service";
 import { toast } from "react-toastify";
 
@@ -15,28 +15,30 @@ const UserTable = (props) => {
 
   // View
   const [isModalViewUser, setModalViewUser] = useState(false);
-  const [viewData, setViewData] = useState(null);
+  const [dataDetail, setDataDetail] = useState(null);
 
   // Delete
   const handleDeleteUser = async (id) => {
     try {
-      const res = await deleteUserAPI({ idUsers: id });
+      const res = await deleteUserAPI(id);
 
       if (res && res.data) {
-        toast.success("Xóa thành công");
-        await loadUser(); // Tải lại danh sách
+        toast.success("Xóa người dùng thành công!");
+        await loadUser();
       } else {
-        toast.error("Xóa không thành công từ máy chủ");
+        toast.error(res?.message || "Xóa không thành công!");
       }
     } catch (error) {
-      toast.error("Xoá không thành công");
+      const errorMsg =
+        error?.response?.data?.message || "Xóa không thành công!";
+      toast.error(errorMsg);
     }
   };
 
   const columns = [
     {
       title: "ID",
-      dataIndex: "idUsers",
+      dataIndex: "_id",
       render: (text, record) => {
         return (
           <a
@@ -44,7 +46,7 @@ const UserTable = (props) => {
             onClick={(e) => {
               e.preventDefault();
               setModalViewUser(true);
-              setViewData(record);
+              setDataDetail(record);
             }}
           >
             {text}
@@ -77,8 +79,7 @@ const UserTable = (props) => {
               description="Bạn có chắc chắn muốn xóa người dùng này không?"
               okText="Có"
               cancelText="Không"
-              // SỬA: Bọc lại bằng Arrow function để tránh tự kích hoạt hàm khi render
-              onConfirm={() => handleDeleteUser(record.idUsers)}
+              onConfirm={() => handleDeleteUser(record._id)}
             >
               <DeleteTwoTone style={{ cursor: "pointer" }} />
             </Popconfirm>
@@ -90,7 +91,7 @@ const UserTable = (props) => {
 
   return (
     <>
-      <Table columns={columns} dataSource={dataUsers} rowKey="idUsers" />
+      <Table columns={columns} dataSource={dataUsers} rowKey="_id" />
 
       <UpdateUser
         isModalUpdateUser={isModalUpdateUser}
@@ -103,8 +104,9 @@ const UserTable = (props) => {
       <ViewUSer
         isModalViewUser={isModalViewUser}
         setModalViewUser={setModalViewUser}
-        viewData={viewData}
-        setViewData={setViewData}
+        dataDetail={dataDetail}
+        setDataDetail={setDataDetail}
+        loadUser={loadUser}
       />
     </>
   );
