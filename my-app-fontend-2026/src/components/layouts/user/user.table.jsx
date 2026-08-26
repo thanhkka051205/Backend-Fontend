@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Space, Table, Popconfirm } from "antd";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import UpdateUser from "./user.update";
@@ -110,7 +110,7 @@ const UserTable = (props) => {
       setCurrent(pagination.current);
     }
 
-    // Nếu thay đổi số lượng bản ghi trên 1 trang (pageSize khác)
+    // Nếu thay đổi số lượng bản ghi trên 1 trang
     if (pagination && pagination.pageSize !== pageSize) {
       setPageSize(pagination.pageSize);
       setCurrent(1);

@@ -14,8 +14,15 @@ const UserPage = (props) => {
   }, [current, pageSize]);
 
   const loadUser = async () => {
-    const res = await fetchAllUserAPI(current, pageSize);
-    setDataUser(res.data.data);
+    try {
+      const res = await fetchAllUserAPI(current, pageSize);
+      if (res && res.data) {
+        setDataUser(res.data.data || res.data.result || []);
+        setTotal(res.data.total || res.data.meta?.total || 0);
+      }
+    } catch (error) {
+      console.log("Lỗi khi load user:", error);
+    }
   };
 
   return (

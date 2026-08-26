@@ -150,8 +150,6 @@ const UserForm = (props) => {
           </div>
         </div>
       </Modal>
-
-      <ToastContainer />
     </div>
   );
 };
