@@ -23,8 +23,8 @@ const deleteUserAPI = async (id) => {
 };
 
 // 4. API GET: Lấy toàn bộ danh sách người dùng
-const getAllUserAPI = async () => {
-  const URL_BACKEND = "/api/v1/users";
+const fetchAllUserAPI = async (current, pagSize) => {
+  const URL_BACKEND = `/api/v1/users?current=${current}&pageSize=${pagSize}`;
   return await axios.get(URL_BACKEND);
 };
 
@@ -54,7 +54,7 @@ export {
   createUserAPI,
   updateUserAPI,
   deleteUserAPI,
-  getAllUserAPI,
+  fetchAllUserAPI,
   handlerUploadFile,
   updateUserAvatarAPI,
 };

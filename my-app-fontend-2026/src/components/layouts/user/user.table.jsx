@@ -7,7 +7,15 @@ import { deleteUserAPI } from "../../../services/api.service";
 import { toast } from "react-toastify";
 
 const UserTable = (props) => {
-  const { dataUsers, loadUser } = props;
+  const {
+    dataUsers,
+    loadUser,
+    current,
+    pageSize,
+    total,
+    setCurrent,
+    setPageSize,
+  } = props;
 
   // Update
   const [isModalUpdateUser, setModalUpdateUser] = useState(false);
@@ -36,6 +44,13 @@ const UserTable = (props) => {
   };
 
   const columns = [
+    {
+      title: "STT",
+      render: (_, record, index) => {
+        return <>{index + 1 + (current - 1) * pageSize}</>;
+      },
+    },
+
     {
       title: "ID",
       dataIndex: "_id",
@@ -89,9 +104,40 @@ const UserTable = (props) => {
     },
   ];
 
+  const onChange = (pagination, filters, sorter, extra) => {
+    // Nếu thay đổi trang (current page khác)
+    if (pagination && pagination.current !== current) {
+      setCurrent(pagination.current);
+    }
+
+    // Nếu thay đổi số lượng bản ghi trên 1 trang (pageSize khác)
+    if (pagination && pagination.pageSize !== pageSize) {
+      setPageSize(pagination.pageSize);
+      setCurrent(1);
+    }
+  };
+
   return (
     <>
-      <Table columns={columns} dataSource={dataUsers} rowKey="_id" />
+      <Table
+        columns={columns}
+        dataSource={dataUsers}
+        rowKey="_id"
+        pagination={{
+          current: current,
+          pageSize: pageSize,
+          total: total,
+          showSizeChanger: true,
+          showTotal: (total, range) => {
+            return (
+              <div>
+                {range[0]}-{range[1]} trên {total} rows
+              </div>
+            );
+          },
+        }}
+        onChange={onChange}
+      />
 
       <UpdateUser
         isModalUpdateUser={isModalUpdateUser}
