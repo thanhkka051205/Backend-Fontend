@@ -1,81 +1,74 @@
-// Định nghĩa một số biến màu sắc cơ bản (tùy chỉnh theo ý bạn)
-$primary-color: #2563eb;
-$text-color: #333333;
-$hover-color: #1d4ed8;
-$border-color: #e5e7eb;
 
 .app-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 15px 5%;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
   background-color: #ffffff;
-  border-bottom: 1px solid $border-color;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #f0f0f0;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  font-family: sans-serif;
+}
 
-  // 1. CSS cho khối Logo
-  .header-logo {
-    .logo-img {
-      height: 40px;
-      display: block;
-      transition: transform 0.2s ease;
+.header-logo a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+}
 
-      &:hover {
-        transform: scale(1.05);
-      }
-    }
-  }
+.logo-icon {
+  font-size: 1.5rem;
+}
 
-  // 2. CSS cho Menu Điều Hướng (Nav)
-  .header-nav {
-    ul {
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      gap: 30px; // Khoảng cách giữa các mục menu
+.logo-text {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-      li {
-        a {
-          text-decoration: none;
-          color: $text-color;
-          font-weight: 500;
-          font-size: 16px;
-          transition: color 0.2s ease;
+.header-menu {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
 
-          &:hover {
-            color: $primary-color;
-          }
-        }
-      }
-    }
-  }
+.header-auth {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  // 3. CSS cho Giỏ hàng & Nút Đăng nhập
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.auth-btn {
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
 
-    .cart-status {
-      font-size: 14px;
-      color: #666;
-      font-weight: 500;
-    }
+.login-btn {
+  color: #4b5563;
+  background-color: transparent;
+}
 
-    .btn-login {
-      text-decoration: none;
-      background-color: $primary-color;
-      color: #ffffff;
-      padding: 8px 20px;
-      border-radius: 6px;
-      font-weight: 500;
-      font-size: 15px;
-      transition: background-color 0.2s ease;
+.login-btn:hover {
+  color: #2563eb;
+  background-color: #f3f4f6;
+}
 
-      &:hover {
-        background-color: $hover-color;
-      }
-    }
-  }
+.register-btn {
+  color: #ffffff;
+  background-color: #2563eb;
+}
+
+.register-btn:hover {
+  background-color: #1d4ed8;
+  color: #ffffff;
 }

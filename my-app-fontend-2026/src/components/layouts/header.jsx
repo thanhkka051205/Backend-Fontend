@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   HomeTwoTone,
@@ -6,12 +6,12 @@ import {
   ProductOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
+import "./header.scss";
 
 const Header = (props) => {
-  const [current, setCurrent] = useState("");
+  const [current, setCurrent] = useState("home");
 
   const onClick = (e) => {
-    console.log("click ", e);
     setCurrent(e.key);
   };
 
@@ -33,19 +33,37 @@ const Header = (props) => {
     },
   ];
 
-  const [collapsed, setCollapsed] = useState(false);
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
   return (
-    <Menu
-      onClick={onClick}
-      selectedKeys={[current]}
-      mode="horizontal"
-      items={items}
-    />
+    <header className="app-header">
+      {/* 1. Logo cá nhân */}
+      <div className="header-logo">
+        <Link to="/">
+          <span className="logo-icon">🚀</span>
+          <span className="logo-text">MyBrand</span>
+        </Link>
+      </div>
+
+      {/* 2. Menu chính */}
+      <div className="header-menu">
+        <Menu
+          onClick={onClick}
+          selectedKeys={[current]}
+          mode="horizontal"
+          items={items}
+          style={{ borderBottom: "none", background: "transparent" }}
+        />
+      </div>
+
+      {/* 3. Khu vực Login / Register */}
+      <div className="header-auth">
+        <Link to="/login" className="auth-btn login-btn">
+          Đăng nhập
+        </Link>
+        <Link to="/register" className="auth-btn register-btn">
+          Đăng ký
+        </Link>
+      </div>
+    </header>
   );
 };
 
