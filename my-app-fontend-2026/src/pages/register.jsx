@@ -137,7 +137,6 @@ const RegisterPage = () => {
                 </Form.Item>
               </Col>
 
-              {/* Nút Đăng Ký */}
               <Col xs={24}>
                 <Form.Item style={{ marginTop: "8px", marginBottom: 0 }}>
                   <Button

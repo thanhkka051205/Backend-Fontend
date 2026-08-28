@@ -55,6 +55,16 @@ const registerUserAPI = async (data) => {
   return await axios.post(URL_BACKEND, data);
 };
 
+const loginAPI = async (email, password) => {
+  const URL_BACKEND = "/api/v1/auth/login";
+  const data = {
+    email: email,
+    password: password,
+    delay: 2000,
+  };
+  return await axios.post(URL_BACKEND, data);
+};
+
 export {
   createUserAPI,
   updateUserAPI,
@@ -63,4 +73,5 @@ export {
   handlerUploadFile,
   updateUserAvatarAPI,
   registerUserAPI,
+  loginAPI,
 };

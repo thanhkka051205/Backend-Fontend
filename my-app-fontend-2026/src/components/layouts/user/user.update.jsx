@@ -1,4 +1,4 @@
-import { Input, Modal } from "antd";
+import { Input, Modal, Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { updateUserAPI } from "../../../services/api.service";
@@ -15,12 +15,14 @@ const UpdateUser = (props) => {
   const [id, setId] = useState("");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     if (dataUpdate) {
       setId(dataUpdate._id);
       setFullName(dataUpdate.fullName);
       setPhone(dataUpdate.phone);
+      setRole(dataUpdate.role);
     }
   }, [dataUpdate]);
 
@@ -38,6 +40,7 @@ const UpdateUser = (props) => {
         setId("");
         setFullName("");
         setPhone("");
+        setRole("");
         setDataUpdate(null);
         setModalUpdateUser(false);
         await loadUser();
@@ -108,6 +111,20 @@ const UpdateUser = (props) => {
                 onChange={(event) => setPhone(event.target.value)}
               />
             </div>
+
+            <Space wrap>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span style={labelStyle}>Role</span>
+                <Select
+                  defaultValue="User"
+                  style={{ width: 100 }}
+                  options={[
+                    { value: "User", label: "User" },
+                    { value: "Admin", label: "Admin" },
+                  ]}
+                />
+              </div>
+            </Space>
           </div>
         </Modal>
       </div>

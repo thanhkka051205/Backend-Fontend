@@ -3,15 +3,36 @@ import Footer from "../components/layouts/footer";
 import { Button, Form, Input, Card, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { loginAPI } from "../services/api.service";
+import { useState } from "react";
 
 const { Title, Text } = Typography;
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
 
-  const onFinish = (values) => {
-    console.log("Dữ liệu đăng nhập thành công:", values);
-    toast.success("Đăng nhập thành công!");
+  const onFinish = async (values) => {
+    setLoading(true);
+    try {
+      const res = await loginAPI(values.email, values.password);
+
+      if (res.data && res.data.access_token) {
+        localStorage.setItem("access_token", res.data.access_token);
+        localStorage.setItem("user_info", JSON.stringify(res.data.user));
+
+        toast.success("Đăng nhập thành công!");
+        navigate("/");
+      }
+    } catch (error) {
+      const errorLogin =
+        error?.response?.data?.message || "Dữ liệu không hợp lệ (400)";
+
+      toast.error(errorLogin);
+    }
+
+    setLoading(false);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -66,6 +87,7 @@ const LoginPage = () => {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
             requiredMark={false}
+            form={form}
           >
             <Form.Item
               label="Email"
@@ -88,6 +110,7 @@ const LoginPage = () => {
 
             <Form.Item style={{ marginTop: "12px", marginBottom: 0 }}>
               <Button
+                loading={loading}
                 type="primary"
                 htmlType="submit"
                 size="large"

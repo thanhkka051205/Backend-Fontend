@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema(
         "Số điện thoại không đúng định dạng",
       ],
     },
+    role: {
+      type: String,
+      default: "user",
+    },
   },
   {
     timestamps: true,

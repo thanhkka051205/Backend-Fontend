@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-const multer = require("multer");
+const jwt = require("jsonwebtoken");
 
 // 1. API POST: Tạo user vào MongoDB
 const createUserController = async (req, res) => {
@@ -183,6 +183,56 @@ const registerUserController = async (req, res) => {
     });
   }
 };
+
+const loginUserController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Vui lòng nhập đầy đủ email và mật khẩu!",
+      });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "Email hoặc mật khẩu không chính xác!",
+      });
+    }
+
+    const payload = {
+      id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      role: user.role,
+    };
+
+    const token = jwt.sign(
+      payload,
+      process.env.JWT_SECRET || "secret_key_sieu_an_toan",
+      {
+        expiresIn: "1d",
+      },
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Đăng nhập thành công!",
+      access_token: token,
+      user: payload,
+    });
+  } catch (error) {
+    console.error("Lỗi Controller Login:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Lỗi Server: " + error.message,
+    });
+  }
+};
+
 module.exports = {
   createUserController,
   getUsersController,
@@ -190,4 +240,5 @@ module.exports = {
   deleteUserController,
   uploadFileController,
   registerUserController,
+  loginUserController,
 };
