@@ -28,6 +28,7 @@ const {
   updateUserController,
   deleteUserController,
   uploadFileController,
+  registerUserController,
 } = require("../controllers/user.controller");
 
 const upload = multer({
@@ -39,5 +40,6 @@ router.get("/users", getUsersController);
 router.put("/users", updateUserController);
 router.delete("/users/:id", deleteUserController);
 router.post("/file/upload", upload.single("file"), uploadFileController);
+router.post("/auth/register", registerUserController);
 
 module.exports = router;

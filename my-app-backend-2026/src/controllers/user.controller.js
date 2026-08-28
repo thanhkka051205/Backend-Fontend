@@ -149,10 +149,45 @@ const uploadFileController = (req, res) => {
   }
 };
 
+const registerUserController = async (req, res) => {
+  try {
+    const { fullName, email, password, phone } = req.body;
+
+    if (!fullName || !email || !password || !phone) {
+      return res.status(400).json({
+        success: false,
+        message: "Vui lòng nhập đầy đủ thông tin!",
+      });
+    }
+
+    const newUser = await User.create({ fullName, email, password, phone });
+
+    return res.status(201).json({
+      success: true,
+      message: "Tạo user thành công!",
+      data: newUser,
+    });
+  } catch (error) {
+    console.error("Lỗi Controller Create User:", error);
+
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: "Email này đã được sử dụng trong hệ thống!",
+      });
+    }
+
+    return res.status(500).json({
+      success: false,
+      message: "Lỗi Server: " + error.message,
+    });
+  }
+};
 module.exports = {
   createUserController,
   getUsersController,
   updateUserController,
   deleteUserController,
   uploadFileController,
+  registerUserController,
 };
