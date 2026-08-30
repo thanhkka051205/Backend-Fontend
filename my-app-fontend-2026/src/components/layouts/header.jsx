@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   HomeTwoTone,
@@ -10,48 +10,20 @@ import {
 } from "@ant-design/icons";
 import { Menu, Dropdown, Space, Avatar } from "antd";
 import { toast } from "react-toastify";
+import { AuthContext } from "../context/auth.context";
 
 const Header = () => {
   const [current, setCurrent] = useState("home");
   const navigate = useNavigate();
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const onClick = (e) => {
-    setCurrent(e.key);
-  };
+  const { user, setUser } = useContext(AuthContext);
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    if (setUser) setUser(null);
     toast.success("Đăng xuất thành công!");
     navigate("/login");
   };
 
-  const userMenuSettings = {
-    items: [
-      {
-        key: "profile",
-        label: <Link to="/profile">Hồ sơ cá nhân</Link>,
-        icon: <UserOutlined />,
-      },
-      {
-        key: "settings",
-        label: <Link to="/settings">Cài đặt</Link>,
-        icon: <SettingOutlined />,
-      },
-      {
-        type: "divider",
-      },
-      {
-        key: "logout",
-        label: <span onClick={handleLogout}>Đăng xuất</span>,
-        icon: <LogoutOutlined />,
-        danger: true,
-      },
-    ],
-  };
-
-  const items = [
+  const mainNavItems = [
     {
       label: <NavLink to="/">Home</NavLink>,
       key: "home",
@@ -69,101 +41,76 @@ const Header = () => {
     },
   ];
 
-  return (
-    <header
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "0 24px",
-        height: "64px",
-        backgroundColor: "#ffffff",
-        boxShadow: "0 1px 4px rgba(0, 21, 41, 0.08)",
-        width: "100%",
-        boxSizing: "border-box",
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Link
-          to="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            textDecoration: "none",
-            gap: "8px",
-          }}
-        >
-          <span style={{ fontSize: "20px" }}>🚀</span>
-          <span
-            style={{ fontSize: "18px", fontWeight: "bold", color: "#1f2937" }}
-          >
-            MyBrand
+  const userMenuSettings = {
+    items: [
+      {
+        key: "welcome",
+        label: (
+          <span style={{ fontWeight: "bold" }}>
+            👋 Chào, {user?.fullName || "Thành viên"}
           </span>
+        ),
+        disabled: true,
+      },
+      { type: "divider" },
+      {
+        key: "profile",
+        label: <Link to="/profile">Hồ sơ cá nhân</Link>,
+        icon: <UserOutlined />,
+      },
+      {
+        key: "settings",
+        label: <Link to="/settings">Cài đặt</Link>,
+        icon: <SettingOutlined />,
+      },
+      { type: "divider" },
+      {
+        key: "logout",
+        label: <span onClick={handleLogout}>Đăng xuất</span>,
+        icon: <LogoutOutlined />,
+        danger: true,
+      },
+    ],
+  };
+
+  return (
+    <header style={styles.header}>
+      <div style={styles.flexCenter}>
+        <Link to="/" style={styles.logoLink}>
+          <span style={{ fontSize: "20px" }}>🚀</span>
+          <span style={styles.logoText}>MyBrand</span>
         </Link>
       </div>
 
-      <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+      <div style={styles.menuContainer}>
         <Menu
-          onClick={onClick}
+          onClick={(e) => setCurrent(e.key)}
           selectedKeys={[current]}
           mode="horizontal"
-          items={items}
-          style={{
-            borderBottom: "none",
-            background: "transparent",
-            minWidth: "300px",
-            justifyContent: "center",
-          }}
+          items={mainNavItems}
+          style={styles.menu}
         />
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-        {isLoggedIn ? (
+      <div style={styles.rightNav}>
+        {user?.id ? (
           <Dropdown menu={userMenuSettings} trigger={["click"]}>
-            <Space
-              style={{
-                cursor: "pointer",
-                padding: "4px 8px",
-                borderRadius: "6px",
-              }}
-            >
+            <Space style={styles.avatarSpace}>
               <Avatar
                 style={{ backgroundColor: "#2563eb" }}
                 icon={<UserOutlined />}
               />
-              <span style={{ fontWeight: 500, color: "#374151" }}>
-                Tài khoản
+              <span style={styles.username}>
+                {user?.fullName || "Tài khoản"}
               </span>
             </Space>
           </Dropdown>
         ) : (
           <>
-            <Link
-              to="/login"
-              style={{
-                padding: "8px 16px",
-                borderRadius: "6px",
-                color: "#2563eb",
-                border: "1px solid #2563eb",
-                textDecoration: "none",
-                fontWeight: 500,
-                transition: "all 0.3s",
-              }}
-            >
+            <Link to="/login" style={styles.btnLogin}>
               Đăng nhập
             </Link>
-            <Link
-              to="/register"
-              style={{
-                padding: "8px 16px",
-                borderRadius: "6px",
-                backgroundColor: "#2563eb",
-                color: "#ffffff",
-                textDecoration: "none",
-                fontWeight: 500,
-                transition: "all 0.3s",
-              }}
-            >
+            <Link to="/register" style={styles.btnRegister}>
               Đăng ký
             </Link>
           </>
@@ -171,6 +118,54 @@ const Header = () => {
       </div>
     </header>
   );
+};
+
+const styles = {
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "0 24px",
+    height: "64px",
+    backgroundColor: "#ffffff",
+    boxShadow: "0 1px 4px rgba(0, 21, 41, 0.08)",
+    width: "100%",
+    boxSizing: "border-box",
+  },
+  flexCenter: { display: "flex", alignItems: "center" },
+  logoLink: {
+    display: "flex",
+    alignItems: "center",
+    textDecoration: "none",
+    gap: "8px",
+  },
+  logoText: { fontSize: "18px", fontWeight: "bold", color: "#1f2937" },
+  menuContainer: { flex: 1, display: "flex", justifyContent: "center" },
+  menu: {
+    borderBottom: "none",
+    background: "transparent",
+    minWidth: "300px",
+    justifyContent: "center",
+  },
+  rightNav: { display: "flex", alignItems: "center", gap: "12px" },
+  avatarSpace: { cursor: "pointer", padding: "4px 8px", borderRadius: "6px" },
+  username: { fontWeight: 500, color: "#374151" },
+  btnLogin: {
+    padding: "8px 16px",
+    borderRadius: "6px",
+    color: "#2563eb",
+    border: "1px solid #2563eb",
+    textDecoration: "none",
+    fontWeight: 500,
+  },
+  btnRegister: {
+    padding: "8px 16px",
+    borderRadius: "6px",
+    backgroundColor: "#2563eb",
+    color: "#ffffff",
+    textDecoration: "none",
+    fontWeight: 500,
+  },
 };
 
 export default Header;

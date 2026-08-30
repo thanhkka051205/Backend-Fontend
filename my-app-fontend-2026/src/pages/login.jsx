@@ -4,7 +4,8 @@ import { Button, Form, Input, Card, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginAPI } from "../services/api.service";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../components/context/auth.context";
 
 const { Title, Text } = Typography;
 
@@ -12,6 +13,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const { setUser } = useContext(AuthContext);
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -21,6 +23,7 @@ const LoginPage = () => {
       if (res.data && res.data.access_token) {
         localStorage.setItem("access_token", res.data.access_token);
         localStorage.setItem("user_info", JSON.stringify(res.data.user));
+        setUser(res.data.user);
 
         toast.success("Đăng nhập thành công!");
         navigate("/");
@@ -105,7 +108,15 @@ const LoginPage = () => {
               name="password"
               rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
             >
-              <Input.Password placeholder="••••••••" size="large" />
+              <Input.Password
+                placeholder="••••••••"
+                size="large"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    form.submit();
+                  }
+                }}
+              />
             </Form.Item>
 
             <Form.Item style={{ marginTop: "12px", marginBottom: 0 }}>
