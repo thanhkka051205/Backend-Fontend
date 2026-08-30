@@ -23,9 +23,10 @@ const App = () => {
       } else {
         setUser(null);
       }
-      setLoading(false);
     } catch (error) {
       setUser(null);
+    } finally {
+      if (setLoading) setLoading(false);
     }
   };
 

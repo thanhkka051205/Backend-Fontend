@@ -288,6 +288,22 @@ const getAccountController = async (req, res) => {
   }
 };
 
+const logoutController = async (req, res) => {
+  try {
+    return res.status(200).json({
+      success: true,
+      message: "Đăng xuất thành công!",
+    });
+  } catch (error) {
+    console.error("Lỗi Controller Logout:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Lỗi Server: " + error.message,
+    });
+  }
+};
+
+
 module.exports = {
   createUserController,
   getUsersController,
@@ -297,4 +313,5 @@ module.exports = {
   registerUserController,
   loginUserController,
   getAccountController,
+  logoutController,
 };

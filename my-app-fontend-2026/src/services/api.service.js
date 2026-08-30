@@ -31,42 +31,49 @@ const fetchAllUserAPI = async (current, pagSize) => {
 // 5. UPLOAD FILE: upload ảnh
 const handlerUploadFile = async (file, folder) => {
   const URL_BACKEND = "/api/v1/file/upload";
-
   const bodyFormData = new FormData();
   bodyFormData.append("file", file);
-
   return await axios.post(URL_BACKEND, bodyFormData);
 };
 
 // 6. API UPDATE AVATAR
 const updateUserAvatarAPI = (avatar, _id, fullName, phone) => {
   const URL_API = "/api/v1/users";
-  const data = {
-    _id,
-    fullName,
-    phone,
-    avatar,
-  };
+  const data = { _id, fullName, phone, avatar };
   return axios.put(URL_API, data);
 };
 
+// 7. Đăng ký người dùng
 const registerUserAPI = async (data) => {
   const URL_BACKEND = "/api/v1/auth/register";
   return await axios.post(URL_BACKEND, data);
 };
 
+// 8. Đăng nhập
 const loginAPI = async (email, password) => {
   const URL_BACKEND = "/api/v1/auth/login";
-  const data = {
-    email: email,
-    password: password,
-    delay: 2000,
-  };
+  const data = { email, password };
   return await axios.post(URL_BACKEND, data);
 };
 
+// 9. Lấy thông tin tài khoản hiện tại (Đã thêm phòng vệ lỗi chuỗi null)
 const getAccountAPI = () => {
-  const URL_BACKEND = "/api/v1/auth/account";
+  const token = localStorage.getItem("access_token");
+
+  if (!token || token === "null" || token === "undefined") {
+    return axios.get("/api/v1/auth/account");
+  }
+
+  return axios.get("/api/v1/auth/account", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+// 10. Đăng xuất
+const logoutAPI = () => {
+  const URL_BACKEND = "/api/v1/auth/logout";
   return axios.get(URL_BACKEND);
 };
 
@@ -80,4 +87,5 @@ export {
   registerUserAPI,
   loginAPI,
   getAccountAPI,
+  logoutAPI,
 };

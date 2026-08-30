@@ -17,10 +17,18 @@ const Header = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
 
-  const handleLogout = () => {
-    if (setUser) setUser(null);
-    toast.success("Đăng xuất thành công!");
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await logoutAPI();
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Có lỗi xảy ra khi gọi API!";
+      toast.error(errorMessage);
+    } finally {
+      localStorage.removeItem("access_token");
+      if (setUser) setUser(null);
+      navigate("/");
+    }
   };
 
   const mainNavItems = [

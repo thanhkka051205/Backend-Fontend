@@ -6,7 +6,9 @@ import LoginPage from "./pages/login.jsx";
 import UserPage from "./pages/user.jsx";
 import RegisterPage from "./pages/register.jsx";
 import ErrorPage from "./pages/error.jsx";
+import Products from "./pages/product.jsx";
 import { AuthWrapper } from "./components/context/auth.context.jsx";
+import PrivateRoute from "./pages/private.route.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +18,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/products",
+        element: (
+          <PrivateRoute>
+            <Products />
+          </PrivateRoute>
+        ),
       },
 
       {

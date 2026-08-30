@@ -2,8 +2,8 @@ import { Button, Result } from "antd";
 
 const ErrorPage = () => (
   <Result
-    status="403"
-    title="403"
+    status="404"
+    title="404"
     subTitle="Sorry, you are not authorized to access this page."
     extra={
       <Button type="link" href="/" target="_blank">

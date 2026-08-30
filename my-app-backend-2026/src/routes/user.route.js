@@ -15,6 +15,7 @@ const {
   registerUserController,
   loginUserController,
   getAccountController,
+  logoutController,
 } = require("../controllers/user.controller");
 
 const storage = multer.diskStorage({
@@ -53,5 +54,6 @@ router.get("/profile", authMiddleware, (req, res) => {
   });
 });
 router.get("/auth/account", getAccountController);
+router.post("/auth/logout", logoutController);
 
 module.exports = router;
