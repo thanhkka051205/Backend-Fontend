@@ -4,6 +4,7 @@ const path = require("path");
 const dns = require("node:dns");
 const connectDB = require("./config/connection.db.js");
 const userRouter = require("./routes/user.route.js");
+const productRouter = require("./routes/products.router.js");
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 dns.setDefaultResultOrder("ipv4first");
@@ -22,6 +23,7 @@ app.use(
 );
 app.use("/public", express.static(path.join(__dirname, "src/public")));
 
+app.use("/api/v1", productRouter);
 app.use("/api/v1", userRouter);
 
 app.listen(PORT, async () => {

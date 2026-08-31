@@ -77,6 +77,11 @@ const logoutAPI = () => {
   return axios.get(URL_BACKEND);
 };
 
+const fetchAllProductAPI = async (current, pageSize) => {
+  const URL_BACKEND = `/api/v1/product?current=${current}&pageSize=${pageSize}`;
+  return await axios.get(URL_BACKEND);
+};
+
 export {
   createUserAPI,
   updateUserAPI,
@@ -88,4 +93,5 @@ export {
   loginAPI,
   getAccountAPI,
   logoutAPI,
+  fetchAllProductAPI,
 };
